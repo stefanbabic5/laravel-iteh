@@ -13,7 +13,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        //
+        return \response()->json(Movie::all());
     }
 
     /**
@@ -21,7 +21,11 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            return response()->json(Movie::create($request->all()));
+        } catch (\Throwable $th) {
+           return \response()->json($th->getMessage(),500);
+        }
     }
 
     /**
@@ -29,7 +33,7 @@ class MovieController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return \response()->json($movie);
     }
 
     /**
@@ -37,7 +41,12 @@ class MovieController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $movie->update($request->all());
+            return response()->json($movie);
+        } catch (\Throwable $th) {
+           return \response()->json($th->getMessage(),500);
+        }
     }
 
     /**
@@ -45,6 +54,11 @@ class MovieController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $movie->delete();
+            return \response()->noContent();
+         } catch (\Throwable $th) {
+            return \response()->json($th->getMessage(),500);
+         }
     }
 }
