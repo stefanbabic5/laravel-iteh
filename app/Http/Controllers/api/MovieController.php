@@ -33,6 +33,7 @@ class MovieController extends Controller
      */
     public function show(string $id)
     {
+        $movie = Movie::findOrFail($id);
         return \response()->json($movie);
     }
 
@@ -42,6 +43,7 @@ class MovieController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+            $movie = Movie::findOrFail($id);
             $movie->update($request->all());
             return response()->json($movie);
         } catch (\Throwable $th) {
@@ -55,6 +57,7 @@ class MovieController extends Controller
     public function destroy(string $id)
     {
         try {
+            $movie = Movie::findOrFail($id);
             $movie->delete();
             return \response()->noContent();
          } catch (\Throwable $th) {
